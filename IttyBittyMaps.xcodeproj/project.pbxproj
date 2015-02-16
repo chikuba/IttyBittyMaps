@@ -1,0 +1,587 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BD0D10251A90690E0016B22B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD0D10241A90690E0016B22B /* SystemConfiguration.framework */; };
+		BD943B091A90711900B34E17 /* libFlickrKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD943B041A90710900B34E17 /* libFlickrKit.a */; };
+		BD943B0C1A90721F00B34E17 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD943B0B1A90721F00B34E17 /* AssetsLibrary.framework */; };
+		BD943B141A91894000B34E17 /* JENMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BD943B131A91894000B34E17 /* JENMapViewController.m */; };
+		BD943B1B1A91971400B34E17 /* JENLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = BD943B1A1A91971400B34E17 /* JENLocation.m */; };
+		BD943B1E1A919E5F00B34E17 /* JENTour.m in Sources */ = {isa = PBXBuildFile; fileRef = BD943B1D1A919E5E00B34E17 /* JENTour.m */; };
+		BD943B211A91E16800B34E17 /* JENTourPlanner.m in Sources */ = {isa = PBXBuildFile; fileRef = BD943B201A91E16800B34E17 /* JENTourPlanner.m */; };
+		BDE46E531A905E47002A53E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE46E521A905E47002A53E9 /* Foundation.framework */; };
+		BDE46E551A905E47002A53E9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE46E541A905E47002A53E9 /* CoreGraphics.framework */; };
+		BDE46E571A905E47002A53E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE46E561A905E47002A53E9 /* UIKit.framework */; };
+		BDE46E5D1A905E47002A53E9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BDE46E5B1A905E47002A53E9 /* InfoPlist.strings */; };
+		BDE46E5F1A905E47002A53E9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BDE46E5E1A905E47002A53E9 /* main.m */; };
+		BDE46E631A905E47002A53E9 /* JENAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BDE46E621A905E47002A53E9 /* JENAppDelegate.m */; };
+		BDE46E661A905E47002A53E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDE46E641A905E47002A53E9 /* Main.storyboard */; };
+		BDE46E691A905E47002A53E9 /* JENViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDE46E681A905E47002A53E9 /* JENViewController.m */; };
+		BDE46E6B1A905E47002A53E9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDE46E6A1A905E47002A53E9 /* Images.xcassets */; };
+		BDE46E721A905E47002A53E9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE46E711A905E47002A53E9 /* XCTest.framework */; };
+		BDE46E731A905E47002A53E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE46E521A905E47002A53E9 /* Foundation.framework */; };
+		BDE46E741A905E47002A53E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE46E561A905E47002A53E9 /* UIKit.framework */; };
+		BDE46E7C1A905E47002A53E9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BDE46E7A1A905E47002A53E9 /* InfoPlist.strings */; };
+		BDE46E7E1A905E47002A53E9 /* IttyBittyMapsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BDE46E7D1A905E47002A53E9 /* IttyBittyMapsTests.m */; };
+		BDE46E881A905F69002A53E9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE46E871A905F69002A53E9 /* MapKit.framework */; };
+		BDE46E8A1A9061AB002A53E9 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE46E891A9061AB002A53E9 /* CoreLocation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BD943B031A90710900B34E17 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD943AFE1A90710900B34E17 /* FlickrKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 552D918C1753F8EF00BE3FEA;
+			remoteInfo = FlickrKit;
+		};
+		BD943B051A90710900B34E17 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD943AFE1A90710900B34E17 /* FlickrKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 552D919A1753F8F000BE3FEA;
+			remoteInfo = FlickrKitTests;
+		};
+		BD943B071A90711500B34E17 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD943AFE1A90710900B34E17 /* FlickrKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 552D918B1753F8EF00BE3FEA;
+			remoteInfo = FlickrKit;
+		};
+		BDE46E751A905E47002A53E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BDE46E471A905E47002A53E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BDE46E4E1A905E47002A53E9;
+			remoteInfo = IttyBittyMaps;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BD0D10241A90690E0016B22B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		BD943AFE1A90710900B34E17 /* FlickrKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FlickrKit.xcodeproj; path = ../FlickrKit/FlickrKit.xcodeproj; sourceTree = "<group>"; };
+		BD943B0B1A90721F00B34E17 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		BD943B121A91894000B34E17 /* JENMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JENMapViewController.h; path = ../JENMapViewController.h; sourceTree = "<group>"; };
+		BD943B131A91894000B34E17 /* JENMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JENMapViewController.m; path = ../JENMapViewController.m; sourceTree = "<group>"; };
+		BD943B191A91971400B34E17 /* JENLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JENLocation.h; sourceTree = "<group>"; };
+		BD943B1A1A91971400B34E17 /* JENLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JENLocation.m; sourceTree = "<group>"; };
+		BD943B1C1A919E5E00B34E17 /* JENTour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JENTour.h; sourceTree = "<group>"; };
+		BD943B1D1A919E5E00B34E17 /* JENTour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JENTour.m; sourceTree = "<group>"; };
+		BD943B1F1A91E16800B34E17 /* JENTourPlanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JENTourPlanner.h; sourceTree = "<group>"; };
+		BD943B201A91E16800B34E17 /* JENTourPlanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JENTourPlanner.m; sourceTree = "<group>"; };
+		BDE46E4F1A905E47002A53E9 /* IttyBittyMaps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IttyBittyMaps.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDE46E521A905E47002A53E9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BDE46E541A905E47002A53E9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		BDE46E561A905E47002A53E9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		BDE46E5A1A905E47002A53E9 /* IttyBittyMaps-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IttyBittyMaps-Info.plist"; sourceTree = "<group>"; };
+		BDE46E5C1A905E47002A53E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BDE46E5E1A905E47002A53E9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BDE46E601A905E47002A53E9 /* IttyBittyMaps-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IttyBittyMaps-Prefix.pch"; sourceTree = "<group>"; };
+		BDE46E611A905E47002A53E9 /* JENAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JENAppDelegate.h; sourceTree = "<group>"; };
+		BDE46E621A905E47002A53E9 /* JENAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JENAppDelegate.m; sourceTree = "<group>"; };
+		BDE46E651A905E47002A53E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BDE46E671A905E47002A53E9 /* JENViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JENViewController.h; sourceTree = "<group>"; };
+		BDE46E681A905E47002A53E9 /* JENViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JENViewController.m; sourceTree = "<group>"; };
+		BDE46E6A1A905E47002A53E9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		BDE46E701A905E47002A53E9 /* IttyBittyMapsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IttyBittyMapsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDE46E711A905E47002A53E9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		BDE46E791A905E47002A53E9 /* IttyBittyMapsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IttyBittyMapsTests-Info.plist"; sourceTree = "<group>"; };
+		BDE46E7B1A905E47002A53E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BDE46E7D1A905E47002A53E9 /* IttyBittyMapsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IttyBittyMapsTests.m; sourceTree = "<group>"; };
+		BDE46E871A905F69002A53E9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		BDE46E891A9061AB002A53E9 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BDE46E4C1A905E47002A53E9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD943B0C1A90721F00B34E17 /* AssetsLibrary.framework in Frameworks */,
+				BD943B091A90711900B34E17 /* libFlickrKit.a in Frameworks */,
+				BD0D10251A90690E0016B22B /* SystemConfiguration.framework in Frameworks */,
+				BDE46E8A1A9061AB002A53E9 /* CoreLocation.framework in Frameworks */,
+				BDE46E881A905F69002A53E9 /* MapKit.framework in Frameworks */,
+				BDE46E551A905E47002A53E9 /* CoreGraphics.framework in Frameworks */,
+				BDE46E571A905E47002A53E9 /* UIKit.framework in Frameworks */,
+				BDE46E531A905E47002A53E9 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BDE46E6D1A905E47002A53E9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDE46E721A905E47002A53E9 /* XCTest.framework in Frameworks */,
+				BDE46E741A905E47002A53E9 /* UIKit.framework in Frameworks */,
+				BDE46E731A905E47002A53E9 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BD943AFF1A90710900B34E17 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BD943B041A90710900B34E17 /* libFlickrKit.a */,
+				BD943B061A90710900B34E17 /* FlickrKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BDE46E461A905E47002A53E9 = {
+			isa = PBXGroup;
+			children = (
+				BD943AFE1A90710900B34E17 /* FlickrKit.xcodeproj */,
+				BDE46E581A905E47002A53E9 /* IttyBittyMaps */,
+				BDE46E771A905E47002A53E9 /* IttyBittyMapsTests */,
+				BDE46E511A905E47002A53E9 /* Frameworks */,
+				BDE46E501A905E47002A53E9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BDE46E501A905E47002A53E9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BDE46E4F1A905E47002A53E9 /* IttyBittyMaps.app */,
+				BDE46E701A905E47002A53E9 /* IttyBittyMapsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BDE46E511A905E47002A53E9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BD943B0B1A90721F00B34E17 /* AssetsLibrary.framework */,
+				BD0D10241A90690E0016B22B /* SystemConfiguration.framework */,
+				BDE46E891A9061AB002A53E9 /* CoreLocation.framework */,
+				BDE46E871A905F69002A53E9 /* MapKit.framework */,
+				BDE46E521A905E47002A53E9 /* Foundation.framework */,
+				BDE46E541A905E47002A53E9 /* CoreGraphics.framework */,
+				BDE46E561A905E47002A53E9 /* UIKit.framework */,
+				BDE46E711A905E47002A53E9 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BDE46E581A905E47002A53E9 /* IttyBittyMaps */ = {
+			isa = PBXGroup;
+			children = (
+				BD943B121A91894000B34E17 /* JENMapViewController.h */,
+				BD943B131A91894000B34E17 /* JENMapViewController.m */,
+				BDE46E611A905E47002A53E9 /* JENAppDelegate.h */,
+				BDE46E621A905E47002A53E9 /* JENAppDelegate.m */,
+				BDE46E641A905E47002A53E9 /* Main.storyboard */,
+				BDE46E671A905E47002A53E9 /* JENViewController.h */,
+				BDE46E681A905E47002A53E9 /* JENViewController.m */,
+				BDE46E6A1A905E47002A53E9 /* Images.xcassets */,
+				BDE46E591A905E47002A53E9 /* Supporting Files */,
+				BD943B191A91971400B34E17 /* JENLocation.h */,
+				BD943B1A1A91971400B34E17 /* JENLocation.m */,
+				BD943B1C1A919E5E00B34E17 /* JENTour.h */,
+				BD943B1D1A919E5E00B34E17 /* JENTour.m */,
+				BD943B1F1A91E16800B34E17 /* JENTourPlanner.h */,
+				BD943B201A91E16800B34E17 /* JENTourPlanner.m */,
+			);
+			path = IttyBittyMaps;
+			sourceTree = "<group>";
+		};
+		BDE46E591A905E47002A53E9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BDE46E5A1A905E47002A53E9 /* IttyBittyMaps-Info.plist */,
+				BDE46E5B1A905E47002A53E9 /* InfoPlist.strings */,
+				BDE46E5E1A905E47002A53E9 /* main.m */,
+				BDE46E601A905E47002A53E9 /* IttyBittyMaps-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BDE46E771A905E47002A53E9 /* IttyBittyMapsTests */ = {
+			isa = PBXGroup;
+			children = (
+				BDE46E7D1A905E47002A53E9 /* IttyBittyMapsTests.m */,
+				BDE46E781A905E47002A53E9 /* Supporting Files */,
+			);
+			path = IttyBittyMapsTests;
+			sourceTree = "<group>";
+		};
+		BDE46E781A905E47002A53E9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BDE46E791A905E47002A53E9 /* IttyBittyMapsTests-Info.plist */,
+				BDE46E7A1A905E47002A53E9 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BDE46E4E1A905E47002A53E9 /* IttyBittyMaps */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BDE46E811A905E47002A53E9 /* Build configuration list for PBXNativeTarget "IttyBittyMaps" */;
+			buildPhases = (
+				BDE46E4B1A905E47002A53E9 /* Sources */,
+				BDE46E4C1A905E47002A53E9 /* Frameworks */,
+				BDE46E4D1A905E47002A53E9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BD943B081A90711500B34E17 /* PBXTargetDependency */,
+			);
+			name = IttyBittyMaps;
+			productName = IttyBittyMaps;
+			productReference = BDE46E4F1A905E47002A53E9 /* IttyBittyMaps.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BDE46E6F1A905E47002A53E9 /* IttyBittyMapsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BDE46E841A905E47002A53E9 /* Build configuration list for PBXNativeTarget "IttyBittyMapsTests" */;
+			buildPhases = (
+				BDE46E6C1A905E47002A53E9 /* Sources */,
+				BDE46E6D1A905E47002A53E9 /* Frameworks */,
+				BDE46E6E1A905E47002A53E9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BDE46E761A905E47002A53E9 /* PBXTargetDependency */,
+			);
+			name = IttyBittyMapsTests;
+			productName = IttyBittyMapsTests;
+			productReference = BDE46E701A905E47002A53E9 /* IttyBittyMapsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BDE46E471A905E47002A53E9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = JEN;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Jennifer Nordwall";
+				TargetAttributes = {
+					BDE46E6F1A905E47002A53E9 = {
+						TestTargetID = BDE46E4E1A905E47002A53E9;
+					};
+				};
+			};
+			buildConfigurationList = BDE46E4A1A905E47002A53E9 /* Build configuration list for PBXProject "IttyBittyMaps" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BDE46E461A905E47002A53E9;
+			productRefGroup = BDE46E501A905E47002A53E9 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = BD943AFF1A90710900B34E17 /* Products */;
+					ProjectRef = BD943AFE1A90710900B34E17 /* FlickrKit.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				BDE46E4E1A905E47002A53E9 /* IttyBittyMaps */,
+				BDE46E6F1A905E47002A53E9 /* IttyBittyMapsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		BD943B041A90710900B34E17 /* libFlickrKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libFlickrKit.a;
+			remoteRef = BD943B031A90710900B34E17 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BD943B061A90710900B34E17 /* FlickrKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FlickrKitTests.xctest;
+			remoteRef = BD943B051A90710900B34E17 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BDE46E4D1A905E47002A53E9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDE46E6B1A905E47002A53E9 /* Images.xcassets in Resources */,
+				BDE46E5D1A905E47002A53E9 /* InfoPlist.strings in Resources */,
+				BDE46E661A905E47002A53E9 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BDE46E6E1A905E47002A53E9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDE46E7C1A905E47002A53E9 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BDE46E4B1A905E47002A53E9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDE46E631A905E47002A53E9 /* JENAppDelegate.m in Sources */,
+				BD943B211A91E16800B34E17 /* JENTourPlanner.m in Sources */,
+				BD943B1B1A91971400B34E17 /* JENLocation.m in Sources */,
+				BDE46E691A905E47002A53E9 /* JENViewController.m in Sources */,
+				BDE46E5F1A905E47002A53E9 /* main.m in Sources */,
+				BD943B141A91894000B34E17 /* JENMapViewController.m in Sources */,
+				BD943B1E1A919E5F00B34E17 /* JENTour.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BDE46E6C1A905E47002A53E9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDE46E7E1A905E47002A53E9 /* IttyBittyMapsTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BD943B081A90711500B34E17 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FlickrKit;
+			targetProxy = BD943B071A90711500B34E17 /* PBXContainerItemProxy */;
+		};
+		BDE46E761A905E47002A53E9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BDE46E4E1A905E47002A53E9 /* IttyBittyMaps */;
+			targetProxy = BDE46E751A905E47002A53E9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BDE46E5B1A905E47002A53E9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BDE46E5C1A905E47002A53E9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		BDE46E641A905E47002A53E9 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BDE46E651A905E47002A53E9 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		BDE46E7A1A905E47002A53E9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BDE46E7B1A905E47002A53E9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BDE46E7F1A905E47002A53E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		BDE46E801A905E47002A53E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BDE46E821A905E47002A53E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IttyBittyMaps/IttyBittyMaps-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../FlickrKit/Classes/**",
+				);
+				INFOPLIST_FILE = "IttyBittyMaps/IttyBittyMaps-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		BDE46E831A905E47002A53E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IttyBittyMaps/IttyBittyMaps-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../FlickrKit/Classes/**",
+				);
+				INFOPLIST_FILE = "IttyBittyMaps/IttyBittyMaps-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		BDE46E851A905E47002A53E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/IttyBittyMaps.app/IttyBittyMaps";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IttyBittyMaps/IttyBittyMaps-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "IttyBittyMapsTests/IttyBittyMapsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		BDE46E861A905E47002A53E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/IttyBittyMaps.app/IttyBittyMaps";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IttyBittyMaps/IttyBittyMaps-Prefix.pch";
+				INFOPLIST_FILE = "IttyBittyMapsTests/IttyBittyMapsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BDE46E4A1A905E47002A53E9 /* Build configuration list for PBXProject "IttyBittyMaps" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BDE46E7F1A905E47002A53E9 /* Debug */,
+				BDE46E801A905E47002A53E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BDE46E811A905E47002A53E9 /* Build configuration list for PBXNativeTarget "IttyBittyMaps" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BDE46E821A905E47002A53E9 /* Debug */,
+				BDE46E831A905E47002A53E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BDE46E841A905E47002A53E9 /* Build configuration list for PBXNativeTarget "IttyBittyMapsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BDE46E851A905E47002A53E9 /* Debug */,
+				BDE46E861A905E47002A53E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BDE46E471A905E47002A53E9 /* Project object */;
+}
