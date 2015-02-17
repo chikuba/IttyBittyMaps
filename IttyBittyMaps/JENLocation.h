@@ -11,17 +11,24 @@
 
 @interface JENLocation : NSObject<MKAnnotation> {
 	
-	CLLocationCoordinate2D coordinate;
-	NSString *title;
-	
+	CLLocationCoordinate2D _coordinate;
+	NSString *_title;
+	bool _isHotel; 
 }
 
+@property (strong, nonatomic) NSMutableArray *imageUrls;
+@property (readonly, nonatomic) bool isHotel;
+
+// MKAnnotation
 @property (readonly, nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic, readonly, copy) NSString *title;
 
-// image url
+- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate title:(NSString*)title;
+- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate;
 
-- (id)initWithLocation:(CLLocationCoordinate2D)coord;
-- (double) distanceToLocation:(JENLocation*)otherLocation;
+- (double)distanceToLocation:(JENLocation*)otherLocation;
+- (bool)shouldIncludeCoordinate:(CLLocationCoordinate2D)coord;
+
+- (void)addImageUrl:(NSURL*)imageUrl;
 
 @end

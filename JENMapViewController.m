@@ -12,176 +12,142 @@
 #import "JENTour.h"
 #import "JENTourPlanner.h"
 
-#define METERS_PER_MILE 1609.344
-
-@interface JENMapViewController () {
-	
-	NSMutableArray *locations;
-}
-
-@end
-
 @implementation JENMapViewController
+
+#pragma mark -
+#pragma mark View
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	locations = [[NSMutableArray alloc] initWithCapacity:20];
 	
 	[[FlickrKit sharedFlickrKit] call:@"flickr.photos.search"
 								 args:@{@"accuracy": @"11",
 										@"has_geo": @"1",
 										@"lat": @"-37.796014",
 										@"lon": @"144.944347",
-										@"per_page": @"100"}
+										@"per_page": @"100",
+										@"extras":@"geo,url_t,url_o,url_m"}
 						  maxCacheAge:FKDUMaxAgeOneHour
 						   completion:^(NSDictionary *response, NSError *error) {
-							   dispatch_async(dispatch_get_main_queue(), ^{
-								   if (response) {
-									   
-									   
-									   // Build an array from the dictionary for easy access to each entry
-									   NSArray *photos = [[response objectForKey:@"photos"] objectForKey:@"photo"] ;
-									   
-									   for (NSDictionary *photo in photos)
-									   {
-										   
-										   FKFlickrPhotosGeoGetLocation *location = [[FKFlickrPhotosGeoGetLocation alloc] init];
-										   location.photo_id = [photo objectForKey:@"id"];
-										   
-										   [[FlickrKit sharedFlickrKit] call:location
-																  completion:^(NSDictionary *response, NSError *error) {
-											   // Note this is not the main thread!
-											   if (response) {
-												   
-												   dispatch_async(dispatch_get_main_queue(), ^{
-													   
-													   CLLocationCoordinate2D coordinate;
-													   coordinate.latitude = [[[[response objectForKey:@"photo"] objectForKey:@"location"] objectForKey:@"latitude"] doubleValue];
-													   coordinate.longitude = [[[[response objectForKey:@"photo"] objectForKey:@"location"]  objectForKey:@"longitude"] doubleValue];
-													   
-													   JENLocation *location = [[JENLocation alloc]
-																				initWithLocation:coordinate];
-													   [self.mapView addAnnotation:location];
-													   
-													   NSLog(@"added annotaion at %f : %f", coordinate.latitude, coordinate.longitude);
-													   
-													   
-													   [locations addObject:location];
-												   });
-											   }
-										   }];
-									   }
-									   
-								   } else {
-									   // show the error
-								   }
-							   });
-						   }];
-	 
-	 
-
-	
-	/*CLLocationCoordinate2D coordinate1;
-	coordinate1.latitude = -37.797100;
-	coordinate1.longitude = 144.959453;
-	JENLocation *location1 = [[JENLocation alloc]
-							 initWithLocation:coordinate1];
-	[self.mapView addAnnotation:location1];
-	NSLog(@"added annotaion at %f : %f", coordinate1.latitude, coordinate1.longitude);
-	[locations addObject:location1];
-	
-	CLLocationCoordinate2D coordinate2;
-	coordinate2.latitude = -37.796014;
-	coordinate2.longitude = 144.944347;
-	JENLocation *location2 = [[JENLocation alloc]
-							  initWithLocation:coordinate2];
-	[self.mapView addAnnotation:location2];
-	NSLog(@"added annotaion at %f : %f", coordinate2.latitude, coordinate2.longitude);
-	[locations addObject:location2];
-	
-	CLLocationCoordinate2D coordinate3;
-	coordinate3.latitude = -37.807408;
-	coordinate3.longitude = 144.949497;
-	JENLocation *location3 = [[JENLocation alloc]
-							  initWithLocation:coordinate3];
-	[self.mapView addAnnotation:location3];
-	NSLog(@"added annotaion at %f : %f", coordinate3.latitude, coordinate3.longitude);
-	[locations addObject:location3];
-	
-	CLLocationCoordinate2D coordinate4;
-	coordinate4.latitude = -37.792568;
-	coordinate4.longitude = 144.931210;
-	JENLocation *location4 = [[JENLocation alloc]
-							  initWithLocation:coordinate4];
-	[self.mapView addAnnotation:location4];
-	NSLog(@"added annotaion at %f : %f", coordinate4.latitude, coordinate4.longitude);
-	[locations addObject:location4];
-	
-	CLLocationCoordinate2D coordinate5;
-	coordinate5.latitude = -37.786463;
-	coordinate5.longitude = 144.957131;
-	JENLocation *location5 = [[JENLocation alloc]
-							  initWithLocation:coordinate5];
-	[self.mapView addAnnotation:location5];
-	NSLog(@"added annotaion at %f : %f", coordinate5.latitude, coordinate5.longitude);
-	[locations addObject:location5];	*/
+							   			 
+		   if (response) {
+			   		
+			   dispatch_async(dispatch_get_global_queue(0,0), ^ {
+				   
+				   NSMutableArray* locations = [self parseLocations:[[response objectForKey:@"photos"] objectForKey:@"photo"]];
+				   
+				   dispatch_async(dispatch_get_main_queue(), ^{
+					   [self addLocationsToMap:locations];
+				   });
+				   
+				   JENTour* tour = [self planTour:locations];
+				   
+				   dispatch_async(dispatch_get_main_queue(), ^{
+					   [self drawTour:tour];
+				   });
+			   });
+			   			   
+		   } else {
+			   // show the error
+		   }
+	}];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-	
 	
 	CLLocationCoordinate2D zoomLocation;
     zoomLocation.latitude = -37.796014;
     zoomLocation.longitude= 144.944347;
 	
-    // 2
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 5*METERS_PER_MILE, 5*METERS_PER_MILE);
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 10000, 10000);
 	
-    // 3
     [self.mapView setRegion:viewRegion animated:YES];
 }
 
-- (IBAction)redrawRouteButtonPressed:(UIButton *)sender {
+-(NSMutableArray*)parseLocations:(NSDictionary*)photos {
 	
-	JENTourPlanner* tourplanner = [[JENTourPlanner alloc] initWithTourLocations:locations
-																	 Population:100];
-	NSLog(@"lenght of shortest tour: %f", [[tourplanner getShortestTour] getLenghtOfTour]);
+	NSMutableArray *locations = [[NSMutableArray alloc] initWithCapacity:[photos count]];
 
-	[tourplanner evolveTours];
-	
-	NSLog(@"lenght of shortest tour: %f", [[tourplanner getShortestTour] getLenghtOfTour]);
-	
-	locations = [[tourplanner getShortestTour] locations];
-	
-	[self showLines];
-	// go through locations and find a route, and then draw it
-}
+	for (NSDictionary *photo in photos) {
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
+		CLLocationCoordinate2D coordinate;
 
-- (void)showLines {
-	
-    CLLocationCoordinate2D *pointsCoordinate = (CLLocationCoordinate2D *)
-	malloc(sizeof(CLLocationCoordinate2D) * [locations count] + 1);
-	
-	for (int i = 0; i < [locations count]; ++i) {
-		pointsCoordinate[i] = [locations[i] coordinate];
+		coordinate.latitude = [[photo objectForKey:@"latitude"] doubleValue];
+		coordinate.longitude = [[photo objectForKey:@"longitude"] doubleValue];
+
+		bool groupedWithOtherLocation = false;
+
+		for (JENLocation* location in locations) {
+
+			if([location shouldIncludeCoordinate:coordinate]) {
+
+				[location addImageUrl:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeSmallSquare75
+															   fromPhotoDictionary:photo]];
+				groupedWithOtherLocation = true;
+				break;
+			}
+		}
+
+		if(groupedWithOtherLocation) continue;
+		
+		JENLocation *location;
+		
+		if([locations count] == 0) {
+			
+			location = [[JENLocation alloc] initWithCoordinate:coordinate]; // the hotell
+			
+		} else location = [[JENLocation alloc] initWithCoordinate:coordinate
+															 title:[photo objectForKey:@"title"]];
+
+		[location addImageUrl:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeSmallSquare75
+													   fromPhotoDictionary:photo]];
+
+		[locations addObject:location];
 	}
 
-	pointsCoordinate[[locations count]] = [locations[0] coordinate];
+	return locations;
+
+}
+
+-(void)addLocationsToMap:(NSMutableArray*)locations {
+	
+	for (JENLocation* location in locations) {
+		
+		[self.mapView addAnnotation:location];
+	}
+}
+
+-(JENTour*)planTour:(NSMutableArray*)locations {
+	
+	JENTourPlanner* tourplanner = [[JENTourPlanner alloc] initWithTourLocations:locations
+																 populationSize:200];
+	[tourplanner replanTours];
+	
+	return [tourplanner getShortestTour];
+}
+
+-(void)drawTour:(JENTour*)tour {
+	
+    CLLocationCoordinate2D *pointsCoordinate = (CLLocationCoordinate2D *)
+	malloc(sizeof(CLLocationCoordinate2D) * [tour.locations count] + 1);
+	
+	for (int i = 0; i < [tour.locations count]; ++i) {
+		pointsCoordinate[i] = [tour.locations[i] coordinate];
+	}
+
+	pointsCoordinate[[tour.locations count]] = [tour.locations[0] coordinate];
 	
     MKPolyline *polyline = [MKPolyline polylineWithCoordinates:pointsCoordinate
-														 count:[locations count] + 1];
+														 count:[tour.locations count] + 1];
     free(pointsCoordinate);
 	
     [self.mapView addOverlay:polyline];
 }
 
-- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
-{
+#pragma mark -
+#pragma mark MKMapViewDelegate
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay {
 	
 	MKPolylineView *polylineView = [[MKPolylineView alloc] initWithPolyline:overlay];
     polylineView.strokeColor = [UIColor colorWithRed:5/255. green:5/255. blue:5/255. alpha:1.0];
@@ -190,22 +156,56 @@
     return polylineView;
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
-{
-    static NSString *annotaionIdentifier=@"annotationIdentifier";
-    MKPinAnnotationView *aView=(MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:annotaionIdentifier ];
-    if (aView==nil) {
+- (MKAnnotationView*)mapView:(MKMapView*)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+	
+    static NSString *annotaionIdentifier = @"annotationIdentifier";
+	
+    MKPinAnnotationView *pinView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:annotaionIdentifier];
+	
+    if(pinView == nil) {
 		
-        aView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:annotaionIdentifier];
-        aView.pinColor = MKPinAnnotationColorRed;
-        aView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        //        aView.image=[UIImage imageNamed:@"arrow"];
-        aView.animatesDrop=TRUE;
-        aView.canShowCallout = YES;
-        aView.calloutOffset = CGPointMake(-5, 5);
+        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
+												  reuseIdentifier:annotaionIdentifier];
+        
+        pinView.rightCalloutAccessoryView = nil;
+        pinView.animatesDrop = true;
+        pinView.canShowCallout = true;
+		pinView.draggable = false;
+        pinView.calloutOffset = CGPointMake(-5, 5);
+		
+		if([annotation isKindOfClass:[JENLocation class]]) {
+			
+			pinView.pinColor = ((JENLocation*)annotation).isHotel ? MKPinAnnotationColorPurple : MKPinAnnotationColorRed;
+		}
+
     }
 	
-    return aView;
+    return pinView;
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+	
+	if([view.annotation isKindOfClass:[JENLocation class]]) {
+	
+		UIImage *image = [UIImage imageWithData: [NSData dataWithContentsOfURL:((JENLocation*)view.annotation).imageUrls[0]]];
+		
+		UIImageView *imgView = [[UIImageView alloc] initWithImage:image];
+		view.leftCalloutAccessoryView = imgView;
+	}
+}
+
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
+	
+	for (MKAnnotationView *view in views) {
+
+		if([view.annotation isKindOfClass:[JENLocation class]]) {
+			
+			if(((JENLocation*)view.annotation).isHotel) {
+				[mapView selectAnnotation:view.annotation animated:YES];
+
+			}
+		}
+	}
 }
 
 @end

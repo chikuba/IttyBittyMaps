@@ -10,36 +10,75 @@
 
 @implementation JENLocation
 
-@synthesize coordinate;
-@synthesize title;
+@synthesize coordinate = _coordinate;
+@synthesize title = _title;
+@synthesize isHotel = _isHotel;
 
-- (id)initWithLocation:(CLLocationCoordinate2D)coord {
-    self = [super init];
+#define InclusionRadiusInMeters 200
+
+- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate title:(NSString*)title {
+    
+	self = [super init];
 	
     if (self) {
-        coordinate = coord;
-		title = @"temp";
+		
+		self.imageUrls = [[NSMutableArray alloc] init];
+		
+		_isHotel = false;
+        _coordinate = coordinate;
+		_title = title;
     }
+	
     return self;
 }
 
-- (double) distanceToLocation:(JENLocation*)otherLocation {
+- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate {
 	
-	if([otherLocation isEqual:[NSNull null]])
-	{
+	self = [super init];
+	
+    if (self) {
 		
-	}
-	   
+		self.imageUrls = [[NSMutableArray alloc] init];
+		
+		_isHotel = true;
+        _coordinate = coordinate;
+		_title = @"The Hotel";
+    }
 	
-	CLLocation *start = [[CLLocation alloc] initWithLatitude:self.coordinate.latitude
-												   longitude:self.coordinate.longitude];
+    return self;
+}
+
+- (double)distanceToLocation:(JENLocation*)otherLocation {
 	
-	CLLocation *finish = [[CLLocation alloc] initWithLatitude:otherLocation.coordinate.latitude
-													longitude:otherLocation.coordinate.longitude];
+	return [self distanceFrom:self.coordinate to:otherLocation.coordinate];;
+}
+
+- (bool)shouldIncludeCoordinate:(CLLocationCoordinate2D)coordinate {
+	
+	CLLocationDistance meters = [self distanceFrom:self.coordinate to:coordinate];
+	
+	return (meters < InclusionRadiusInMeters);
+}
+
+- (void)addImageUrl:(NSURL*)imageUrl {
+	
+	[self.imageUrls addObject:imageUrl];
+}
+
+#pragma mark -
+#pragma mark Helpers
+
+- (double)distanceFrom:(CLLocationCoordinate2D)fromCoordinate to:(CLLocationCoordinate2D)toCoordinate {
+	
+	CLLocation *start = [[CLLocation alloc] initWithLatitude:fromCoordinate.latitude
+												   longitude:fromCoordinate.longitude];
+	
+	CLLocation *finish = [[CLLocation alloc] initWithLatitude:toCoordinate.latitude
+													longitude:toCoordinate.longitude];
 	
 	CLLocationDistance meters = [start distanceFromLocation:finish];
 	
-	return meters; 
+	return meters;
 }
 
 @end

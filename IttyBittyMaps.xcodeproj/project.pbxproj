@@ -21,7 +21,6 @@
 		BDE46E5F1A905E47002A53E9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BDE46E5E1A905E47002A53E9 /* main.m */; };
 		BDE46E631A905E47002A53E9 /* JENAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BDE46E621A905E47002A53E9 /* JENAppDelegate.m */; };
 		BDE46E661A905E47002A53E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDE46E641A905E47002A53E9 /* Main.storyboard */; };
-		BDE46E691A905E47002A53E9 /* JENViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDE46E681A905E47002A53E9 /* JENViewController.m */; };
 		BDE46E6B1A905E47002A53E9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDE46E6A1A905E47002A53E9 /* Images.xcassets */; };
 		BDE46E721A905E47002A53E9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE46E711A905E47002A53E9 /* XCTest.framework */; };
 		BDE46E731A905E47002A53E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE46E521A905E47002A53E9 /* Foundation.framework */; };
@@ -86,8 +85,6 @@
 		BDE46E611A905E47002A53E9 /* JENAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JENAppDelegate.h; sourceTree = "<group>"; };
 		BDE46E621A905E47002A53E9 /* JENAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JENAppDelegate.m; sourceTree = "<group>"; };
 		BDE46E651A905E47002A53E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		BDE46E671A905E47002A53E9 /* JENViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JENViewController.h; sourceTree = "<group>"; };
-		BDE46E681A905E47002A53E9 /* JENViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JENViewController.m; sourceTree = "<group>"; };
 		BDE46E6A1A905E47002A53E9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BDE46E701A905E47002A53E9 /* IttyBittyMapsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IttyBittyMapsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDE46E711A905E47002A53E9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -179,8 +176,6 @@
 				BDE46E611A905E47002A53E9 /* JENAppDelegate.h */,
 				BDE46E621A905E47002A53E9 /* JENAppDelegate.m */,
 				BDE46E641A905E47002A53E9 /* Main.storyboard */,
-				BDE46E671A905E47002A53E9 /* JENViewController.h */,
-				BDE46E681A905E47002A53E9 /* JENViewController.m */,
 				BDE46E6A1A905E47002A53E9 /* Images.xcassets */,
 				BDE46E591A905E47002A53E9 /* Supporting Files */,
 				BD943B191A91971400B34E17 /* JENLocation.h */,
@@ -347,7 +342,6 @@
 				BDE46E631A905E47002A53E9 /* JENAppDelegate.m in Sources */,
 				BD943B211A91E16800B34E17 /* JENTourPlanner.m in Sources */,
 				BD943B1B1A91971400B34E17 /* JENLocation.m in Sources */,
-				BDE46E691A905E47002A53E9 /* JENViewController.m in Sources */,
 				BDE46E5F1A905E47002A53E9 /* main.m in Sources */,
 				BD943B141A91894000B34E17 /* JENMapViewController.m in Sources */,
 				BD943B1E1A919E5F00B34E17 /* JENTour.m in Sources */,

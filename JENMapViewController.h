@@ -12,8 +12,5 @@
 @interface JENMapViewController : UIViewController<MKMapViewDelegate>
 
 @property(weak, nonatomic) IBOutlet MKMapView *mapView;
-@property(weak, nonatomic) IBOutlet UIButton *routeButton;
 
-- (IBAction)redrawRouteButtonPressed:(UIButton *)sender;
-- (void)showLines;
 @end

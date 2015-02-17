@@ -12,7 +12,10 @@
 
 @interface JENTourPlanner : NSObject
 
--(id)initWithTourLocations:(NSMutableArray*)_locations Population:(int)_populationSize ;
+-(id)initWithTourLocations:(NSMutableArray*)locations populationSize:(int)populationSize;
+
+-(void)replanTours;
+
 -(JENTour*)getShortestTour;
--(void)evolveTours;
+
 @end

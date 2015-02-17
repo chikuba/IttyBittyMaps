@@ -11,29 +11,29 @@
 
 @interface JENTourPlanner () {
 	
-	int popluationSize;
-	NSMutableArray *locations;
-	NSMutableArray *tours;
+	int _popluationSize;
+	NSMutableArray *_locations;
+	NSMutableArray *_tours;
 }
 
 @end
 
 @implementation JENTourPlanner 
 
--(id)initWithTourLocations:(NSMutableArray*)_locations Population:(int)_populationSize {
+-(id)initWithTourLocations:(NSMutableArray*)locations populationSize:(int)populationSize {
 
 	self = [super init];
 	
     if (self) {
-        popluationSize = _populationSize;
-		locations = _locations;
-		tours = [[NSMutableArray alloc] initWithCapacity:popluationSize];
+        _popluationSize = populationSize;
+		_locations = locations;
+		_tours = [[NSMutableArray alloc] initWithCapacity:_popluationSize];
 		
-		for(int i = 0; i < popluationSize; i++) {
+		for(int i = 0; i < _popluationSize; i++) {
 			
-			tours[i] = [[JENTour alloc] initWithLocations:locations];
+			_tours[i] = [[JENTour alloc] initWithLocations:locations];
 			
-			[tours[i] shuffle];
+			[_tours[i] shuffle];
 		}
     }
     return self;
@@ -41,32 +41,18 @@
 
 -(JENTour*)getShortestTour {
 	
-	return [self getShortestTour:tours];
+	return [self getShortestOfTours:_tours];
 }
 
--(JENTour*)getShortestTour:(NSMutableArray*)_tours {
-	
-	JENTour* shortestTour = [_tours firstObject];
-	
-	for (JENTour* tour in _tours) {
-				
-		if([tour getLenghtOfTour] < [shortestTour getLenghtOfTour]) {
-			shortestTour = tour;
-		}
-	}
-	
-	return shortestTour;
-}
-
--(void)evolveTours {
+-(void)replanTours {
 	
 	for (int i = 0; i < 100; i++) {
 
-		NSMutableArray *newTourPopluation = [[NSMutableArray alloc] initWithCapacity:popluationSize];
+		NSMutableArray *newTourPopluation = [[NSMutableArray alloc] initWithCapacity:_popluationSize];
 		
-		newTourPopluation[0] = [self getShortestTour:tours];
+		newTourPopluation[0] = [self getShortestTour];
 		
-		for (int i = 1; i < popluationSize; i++) {
+		for (int i = 1; i < _popluationSize; i++) {
 			
 			JENTour* parent1 = [self getRandomTour];
 			JENTour* parent2 = [self getRandomTour];
@@ -81,19 +67,36 @@
 			[tour mutate];
 		}
 		
-		tours = newTourPopluation;
+		_tours = newTourPopluation;
 	}
 }
+
+#pragma mark -
+#pragma mark Helpers
 
 -(JENTour*)getRandomTour {
 	
 	NSMutableArray* tourPool = [[NSMutableArray alloc] initWithCapacity:7];
 	
 	for (int i = 0; i < 7; i++) {
-		tourPool[i] = tours[arc4random_uniform([tours count])];
+		tourPool[i] = _tours[arc4random_uniform([_tours count])];
 	}
 	
-	return [self getShortestTour:tourPool];
+	return [self getShortestOfTours:tourPool];
+}
+
+-(JENTour*)getShortestOfTours:(NSMutableArray*)tours {
+	
+	JENTour* shortestTour = [tours firstObject];
+	
+	for (JENTour* tour in tours) {
+		
+		if([tour getDistance] < [shortestTour getDistance]) {
+			shortestTour = tour;
+		}
+	}
+	
+	return shortestTour;
 }
 
 @end

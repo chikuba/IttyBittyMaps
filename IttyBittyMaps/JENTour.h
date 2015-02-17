@@ -8,17 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-@interface JENTour : NSObject {
-	
-	
-}
+@interface JENTour : NSObject 
 
 @property (strong, nonatomic) NSMutableArray *locations;
 
--(id)initWithLocations:(NSMutableArray*)locations;
--(id)initAsCrossoverOfTour1:(JENTour*)parent1 andTour2:(JENTour*)parent2;
--(void)shuffle;
--(void)mutate;
--(double)getLenghtOfTour;
+- (id)initWithLocations:(NSMutableArray*)locations;
+- (id)initAsCrossoverOfTour1:(JENTour*)parent1 andTour2:(JENTour*)parent2;
+
+- (void)shuffle;
+- (void)mutate;
+
+- (double)getDistance;
 
 @end

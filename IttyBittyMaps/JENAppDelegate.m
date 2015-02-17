@@ -15,18 +15,7 @@
 {
    
 	[[FlickrKit sharedFlickrKit] initializeWithAPIKey:@"cdc874a5628a18d2012264a07b049e90"
-										 sharedSecret:@"789217d2a8eded5c"];
-
-	//@"accuracy": @"11",
-	//@"has_geo": @"1",
-	//@"lat": @"-37.785834",
-	//@"lon": @"144.406417"
-	
-		
-	
-
-	
-	
+										 sharedSecret:@"789217d2a8eded5c"];	
 	
     return YES;
 }
