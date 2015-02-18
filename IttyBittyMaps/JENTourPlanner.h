@@ -16,6 +16,6 @@
 
 -(void)replanTours;
 
--(JENTour*)getShortestTour;
+-(JENTour*)shortestTour;
 
 @end

@@ -40,7 +40,7 @@
     return self;
 }
 
--(JENTour*)getShortestTour {
+-(JENTour*)shortestTour {
 	
 	return [self getShortestOfTours:_tours];
 }
@@ -49,13 +49,13 @@
 	
 	NSAssert(PopulationSize > 0, @"The poplulationsize must be atleast 1 or more. ");
 	
-	NSLog(@"shortest tour before replan: %f", [[self getShortestTour] getDistance]);
+	NSLog(@"shortest tour before replan: %f", [[self shortestTour] distance]);
 		
 	for (int i = 0; i < EvolutionCycles; i++) {
 
 		NSMutableArray *newTourPopluation = [[NSMutableArray alloc] initWithCapacity:PopulationSize];
 		
-		newTourPopluation[0] = [self getShortestTour];
+		newTourPopluation[0] = [self shortestTour];
 		
 		for (int i = 1; i < PopulationSize; i++) {
 			
@@ -76,7 +76,7 @@
 		_tours = newTourPopluation;
 	}
 	
-	NSLog(@"shortest tour after replan: %f", [[self getShortestTour] getDistance]);
+	NSLog(@"shortest tour after replan: %f", [[self shortestTour] distance]);
 
 }
 
@@ -100,7 +100,7 @@
 	
 	for (JENTour* tour in tours) {
 		
-		if([tour getDistance] < [shortestTour getDistance]) {
+		if([tour distance] < [shortestTour distance]) {
 			shortestTour = tour;
 		}
 	}

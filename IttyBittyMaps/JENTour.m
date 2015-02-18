@@ -94,7 +94,7 @@
     for (NSUInteger i = 0; i < count; ++i) {
 		
         NSInteger remainingCount = count - i;
-        NSInteger exchangeIndex = i + arc4random_uniform((u_int32_t )remainingCount);
+        NSInteger exchangeIndex = i + arc4random_uniform((u_int32_t)remainingCount);
 		
         [shuffledLocations exchangeObjectAtIndex:i withObjectAtIndex:exchangeIndex];
     }
@@ -112,15 +112,15 @@
 		
 		if(arc4random_uniform(100) < MutationRate) {
 						
-			[mutatedLocations exchangeObjectAtIndex:arc4random_uniform((u_int32_t )count)
+			[mutatedLocations exchangeObjectAtIndex:arc4random_uniform((u_int32_t)count)
 								withObjectAtIndex:i];
 		}
 	}
-	
+		
 	self.locations = mutatedLocations;
 }
 
-- (double)getDistance {
+- (double)distance {
 	
 	if(_distance > 0.0) return _distance;
 	

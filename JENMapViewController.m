@@ -129,10 +129,12 @@
 	
 	[tourplanner replanTours];
 	
-	return [tourplanner getShortestTour];
+	return [tourplanner shortestTour];
 }
 
 -(void)drawTourOnMap:(JENTour*)tour {
+	
+	NSAssert(([tour.locations count] > 2), @"You need 3 or more locations to get a full tour");
 	
     CLLocationCoordinate2D *pointsCoordinate
 	= (CLLocationCoordinate2D *)malloc(sizeof(CLLocationCoordinate2D) * [tour.locations count] + 1);
@@ -141,7 +143,7 @@
 		pointsCoordinate[i] = [tour.locations[i] coordinate];
 	}
 
-	pointsCoordinate[[tour.locations count]] = [tour.locations[0] coordinate];
+	pointsCoordinate[[tour.locations count]] = [[tour.locations firstObject] coordinate];
 	
     MKPolyline *polyline = [MKPolyline polylineWithCoordinates:pointsCoordinate
 														 count:[tour.locations count] + 1];

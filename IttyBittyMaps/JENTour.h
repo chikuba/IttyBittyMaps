@@ -18,6 +18,6 @@
 - (void)shuffle;
 - (void)mutate;
 
-- (double)getDistance;
+- (double)distance;
 
 @end
