@@ -19,8 +19,8 @@
 @implementation JENTourPlanner
 
 #define PopulationSize 100
-#define EvolutionCycles 300
-#define IsolatedMatingPoolPopulation 7
+#define EvolutionCycles 100
+#define IsolatedMatingPoolPopulation 20
 
 -(id)initWithTourLocations:(NSArray*)locations {
 
@@ -69,6 +69,7 @@
 		}
 		
 		for (JENTour* tour in newTourPopluation) {
+			
 			[tour mutate];
 		}
 		

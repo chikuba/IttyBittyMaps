@@ -110,7 +110,7 @@
 	
 	for(int i = 0; i < count; i++) {
 		
-		if(arc4random_uniform(1000) < MutationRate) {
+		if(arc4random_uniform(100) < MutationRate) {
 						
 			[mutatedLocations exchangeObjectAtIndex:arc4random_uniform((u_int32_t )count)
 								withObjectAtIndex:i];
