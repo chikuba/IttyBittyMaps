@@ -39,7 +39,7 @@
 			@"lon": [NSString stringWithFormat:@"%f", coordinate.longitude],
 			@"per_page": [NSString stringWithFormat:@"%d", NumberOfPhotosFromFlickr],
 			@"extras": @"geo"}
-	 maxCacheAge:FKDUMaxAgeNeverCache
+	 maxCacheAge:FKDUMaxAgeOneHour
 	 completion:^(NSDictionary *response, NSError *error) {
 							   
 	   if (response) {
@@ -48,6 +48,20 @@
 			   
 			   NSArray* photoLocations = [weakSelf parseLocations:[[response objectForKey:@"photos"]
 																   objectForKey:@"photo"]];
+			   
+			   if([photoLocations count] < 3) {
+				   
+				   dispatch_async(dispatch_get_main_queue(), ^{
+					   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not enough photos"
+																	   message:@"Need 3 or more photo locations to make a route"
+																	  delegate:weakSelf
+															 cancelButtonTitle:@"OK"
+															 otherButtonTitles:nil];
+					   [alert show];
+					});
+				   
+				   return;
+			   }
 			   
 			   dispatch_async(dispatch_get_main_queue(), ^{
 				   

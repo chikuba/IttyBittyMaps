@@ -11,7 +11,7 @@
 
 @interface JENTourPlanner () {
 	
-	NSMutableArray *_tours;
+	NSArray *_tours;
 }
 
 @end
@@ -20,7 +20,7 @@
 
 #define PopulationSize 100
 #define EvolutionCycles 100
-#define IsolatedMatingPoolPopulation 20
+#define IsolatedMatingPoolPopulation 5
 
 -(id)initWithTourLocations:(NSArray*)locations {
 
@@ -28,14 +28,16 @@
 	
     if (self) {
 		
-		_tours = [[NSMutableArray alloc] initWithCapacity:PopulationSize];
+		NSMutableArray *tourPopulation = [[NSMutableArray alloc] initWithCapacity:PopulationSize];
 		
 		for (int i = 0; i < PopulationSize; i++) {
 			
-			_tours[i] = [[JENTour alloc] initWithLocations:locations];
+			tourPopulation[i] = [[JENTour alloc] initWithLocations:locations];
 			
-			[_tours[i] shuffle];
+			[tourPopulation[i] shuffle];
 		}
+		
+		_tours = tourPopulation;
     }
     return self;
 }
@@ -49,7 +51,9 @@
 	
 	NSAssert(PopulationSize > 0, @"The poplulationsize must be atleast 1 or more. ");
 	
-	NSLog(@"shortest tour before replan: %f", [[self shortestTour] distance]);
+	double tourDistanceBefore = [[self shortestTour] distance];
+	
+	NSLog(@"Shortest tour before replan: %f", tourDistanceBefore);
 		
 	for (int i = 0; i < EvolutionCycles; i++) {
 
@@ -76,8 +80,10 @@
 		_tours = newTourPopluation;
 	}
 	
-	NSLog(@"shortest tour after replan: %f", [[self shortestTour] distance]);
-
+	double tourDistanceAfter = [[self shortestTour] distance];
+	
+	NSLog(@"Shortest tour after replan: %f", tourDistanceAfter);
+	NSLog(@"Tour is %f.2 procent shorter. ", (tourDistanceAfter/tourDistanceBefore) * 100);
 }
 
 #pragma mark -

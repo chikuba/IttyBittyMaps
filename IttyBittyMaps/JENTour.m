@@ -46,7 +46,6 @@
     if (self) {
 		
        NSMutableArray *crossoverLocations = [[NSMutableArray alloc] initWithCapacity:[parent1.locations count]];
-		_distance = 0.0;
 
 		int startPos = arc4random_uniform([parent1.locations count]);
 		int endPos = arc4random_uniform([parent1.locations count]);
@@ -80,6 +79,7 @@
 		}
 		
 		self.locations = crossoverLocations;
+		_distance = 0.0;
 	}
 	
     return self;
@@ -100,6 +100,7 @@
     }
 	
 	self.locations = shuffledLocations;
+	_distance = 0.0;
 }
 
 - (void)mutate {
@@ -118,6 +119,7 @@
 	}
 		
 	self.locations = mutatedLocations;
+	_distance = 0.0;
 }
 
 - (double)distance {
