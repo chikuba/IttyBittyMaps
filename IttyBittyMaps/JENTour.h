@@ -12,7 +12,7 @@
 
 @property (strong, nonatomic) NSMutableArray *locations;
 
-- (id)initWithLocations:(NSMutableArray*)locations;
+- (id)initWithLocations:(NSArray*)locations;
 - (id)initAsCrossoverOfTour1:(JENTour*)parent1 andTour2:(JENTour*)parent2;
 
 - (void)shuffle;

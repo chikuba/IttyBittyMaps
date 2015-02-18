@@ -10,20 +10,15 @@
 
 @implementation JENPhotoLocation
 
-@synthesize coordinate = _coordinate;
-@synthesize title = _title;
-@synthesize isHotel = _isHotel;
+#define InclusionRadiusInMeters 100
 
-#define InclusionRadiusInMeters 200
-
-- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate title:(NSString*)title {
+- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate thumbnailUrl:(NSURL*)url title:(NSString*)title {
     
 	self = [super init];
 	
     if (self) {
 		
-		self.imageUrls = [[NSMutableArray alloc] init];
-		
+		_thumbnailUrl = url;
 		_isHotel = false;
         _coordinate = coordinate;
 		_title = title;
@@ -32,14 +27,13 @@
     return self;
 }
 
-- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate {
+- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate thumbnailUrl:(NSURL*)url {
 	
 	self = [super init];
 	
     if (self) {
 		
-		self.imageUrls = [[NSMutableArray alloc] init];
-		
+		_thumbnailUrl = url;
 		_isHotel = true;
         _coordinate = coordinate;
 		_title = @"The Hotel";
@@ -58,11 +52,6 @@
 	CLLocationDistance meters = [self distanceFrom:self.coordinate to:coordinate];
 	
 	return (meters < InclusionRadiusInMeters);
-}
-
-- (void)addImageUrl:(NSURL*)imageUrl {
-	
-	[self.imageUrls addObject:imageUrl];
 }
 
 #pragma mark -

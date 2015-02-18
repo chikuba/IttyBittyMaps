@@ -21,6 +21,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	
 }
 
 #pragma mark -
@@ -28,9 +30,10 @@
 
 - (void)fetchAndDrawPhotoTourForLocationAsync:(CLLocationCoordinate2D)coordinate {
 	
+	__weak typeof(self) weakSelf = self;
+	
 	[[FlickrKit sharedFlickrKit]
 	 call:@"flickr.photos.search"
-					
 	 args:@{@"accuracy": @"11",
 			@"has_geo": @"1",
 			@"lat": [NSString stringWithFormat:@"%f", coordinate.latitude],
@@ -44,23 +47,25 @@
 		   
 		   dispatch_async(dispatch_get_global_queue(0,0), ^ {
 			   
-			   NSMutableArray* photoLocations = [self parseLocations:[[response objectForKey:@"photos"] objectForKey:@"photo"]];
+			   NSArray* photoLocations = [weakSelf parseLocations:[[response objectForKey:@"photos"]
+																   objectForKey:@"photo"]];
 			   
 			   dispatch_async(dispatch_get_main_queue(), ^{
-				   [self addLocationsToMap:[[NSArray alloc] initWithArray:photoLocations]];
+				   
+				   [weakSelf.mapView addAnnotations:photoLocations];
 			   });
 			   
-			   JENTour* tour = [self planTour:photoLocations];
+			   JENTour* tour = [weakSelf planTour:photoLocations];
 			   
 			   dispatch_async(dispatch_get_main_queue(), ^{
-				   [self drawTourOnMap:tour];
+				   [weakSelf drawTourOnMap:tour];
 			   });
 		   });
 		   
 	   } else {
 		   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unable to fetch photos"
 														   message:error.localizedDescription
-														  delegate:self
+														  delegate:weakSelf
 												 cancelButtonTitle:@"OK"
 												 otherButtonTitles:nil];
 		   [alert show];
@@ -68,25 +73,22 @@
    }];
 }
 
--(NSMutableArray*)parseLocations:(NSDictionary*)photos {
+-(NSArray*)parseLocations:(NSDictionary*)photos {
 	
 	NSMutableArray *locations = [[NSMutableArray alloc] initWithCapacity:[photos count]];
 
 	for (NSDictionary *photo in photos) {
 
 		CLLocationCoordinate2D coordinate;
-
 		coordinate.latitude = [[photo objectForKey:@"latitude"] doubleValue];
 		coordinate.longitude = [[photo objectForKey:@"longitude"] doubleValue];
-
+		
 		bool groupedWithOtherLocation = false;
 
 		for (JENPhotoLocation* location in locations) {
 
 			if([location shouldIncludeCoordinate:coordinate]) {
-
-				[location addImageUrl:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeSmallSquare75
-															   fromPhotoDictionary:photo]];
+				
 				groupedWithOtherLocation = true;
 				break;
 			}
@@ -94,37 +96,38 @@
 
 		if(groupedWithOtherLocation) continue;
 		
-		JENPhotoLocation *location;
+		NSURL *thumbnailUrl = [[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeSmallSquare75
+													   fromPhotoDictionary:photo];
 		
+		
+		// we just assume that the first one we add is the hotel. this can really be done in a nicer way
 		if([locations count] == 0) {
 			
-			location = [[JENPhotoLocation alloc] initWithCoordinate:coordinate]; // the hotell
+			JENPhotoLocation *theHotel = [[JENPhotoLocation alloc]
+										  initWithCoordinate:coordinate
+										  thumbnailUrl:thumbnailUrl];
 			
-		} else location = [[JENPhotoLocation alloc] initWithCoordinate:coordinate
-															 title:[photo objectForKey:@"title"]];
-
-		[location addImageUrl:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeSmallSquare75
-													   fromPhotoDictionary:photo]];
-
-		[locations addObject:location];
+			[locations addObject:theHotel];
+			
+		} else {
+			
+			JENPhotoLocation *photoLocation = [[JENPhotoLocation alloc]
+											   initWithCoordinate:coordinate
+											   thumbnailUrl:thumbnailUrl
+											   title:[photo objectForKey:@"title"]];
+			
+			[locations addObject:photoLocation];
+		}
 	}
 
 	return locations;
 
 }
 
--(void)addLocationsToMap:(NSArray*)photoLocations {
+-(JENTour*)planTour:(NSArray*)photoLocations {
 	
-	for (JENPhotoLocation* photoLocation in photoLocations) {
-		
-		[self.mapView addAnnotation:photoLocation];
-	}
-}
-
--(JENTour*)planTour:(NSMutableArray*)photoLocations {
+	JENTourPlanner* tourplanner = [[JENTourPlanner alloc] initWithTourLocations:photoLocations];
 	
-	JENTourPlanner* tourplanner = [[JENTourPlanner alloc] initWithTourLocations:photoLocations
-																 populationSize:200];
 	[tourplanner replanTours];
 	
 	return [tourplanner getShortestTour];
@@ -132,8 +135,8 @@
 
 -(void)drawTourOnMap:(JENTour*)tour {
 	
-    CLLocationCoordinate2D *pointsCoordinate = (CLLocationCoordinate2D *)
-	malloc(sizeof(CLLocationCoordinate2D) * [tour.locations count] + 1);
+    CLLocationCoordinate2D *pointsCoordinate
+	= (CLLocationCoordinate2D *)malloc(sizeof(CLLocationCoordinate2D) * [tour.locations count] + 1);
 	
 	for (int i = 0; i < [tour.locations count]; ++i) {
 		pointsCoordinate[i] = [tour.locations[i] coordinate];
@@ -154,7 +157,7 @@
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay {
 	
 	MKPolylineView *polylineView = [[MKPolylineView alloc] initWithPolyline:overlay];
-    polylineView.strokeColor = [UIColor colorWithRed:5/255. green:5/255. blue:5/255. alpha:1.0];
+    polylineView.strokeColor = [UIColor blackColor];
     polylineView.lineWidth = 2;
 	
     return polylineView;
@@ -164,14 +167,14 @@
 	
     static NSString *annotaionIdentifier = @"annotationIdentifier";
 	
-    MKPinAnnotationView *pinView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:annotaionIdentifier];
+    MKPinAnnotationView *pinView = (MKPinAnnotationView*)
+	[mapView dequeueReusableAnnotationViewWithIdentifier:annotaionIdentifier];
 	
     if(pinView == nil) {
 		
         pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
 												  reuseIdentifier:annotaionIdentifier];
         
-        pinView.rightCalloutAccessoryView = nil;
         pinView.animatesDrop = true;
         pinView.canShowCallout = true;
 		pinView.draggable = false;
@@ -189,11 +192,21 @@
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
 	
 	if([view.annotation isKindOfClass:[JENPhotoLocation class]]) {
-	
-		UIImage *image = [UIImage imageWithData: [NSData dataWithContentsOfURL:((JENPhotoLocation*)view.annotation).imageUrls[0]]];
 		
-		UIImageView *imgView = [[UIImageView alloc] initWithImage:image];
-		view.leftCalloutAccessoryView = imgView;
+		__weak MKAnnotationView *weakView = view;
+		
+		dispatch_queue_t downloadQueue = dispatch_queue_create("thumbnail_downloader", NULL);
+															   dispatch_async(downloadQueue, ^{
+																   
+			NSData *data = [NSData dataWithContentsOfURL:((JENPhotoLocation*)weakView.annotation).thumbnailUrl];
+			UIImage *image = [UIImage imageWithData:data];
+																   
+			dispatch_async(dispatch_get_main_queue(), ^ {
+				
+				UIImageView *imgView = [[UIImageView alloc] initWithImage:image];
+				weakView.leftCalloutAccessoryView = imgView;
+			});
+		});
 	}
 }
 

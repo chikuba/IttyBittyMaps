@@ -9,26 +9,19 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
-@interface JENPhotoLocation : NSObject<MKAnnotation> {
-	
-	CLLocationCoordinate2D _coordinate;
-	NSString *_title;
-	bool _isHotel; 
-}
+@interface JENPhotoLocation : NSObject<MKAnnotation>
 
-@property (strong, nonatomic) NSMutableArray *imageUrls;
+@property (strong, nonatomic, readonly) NSURL *thumbnailUrl;
 @property (readonly, nonatomic) bool isHotel;
 
 // MKAnnotation
 @property (readonly, nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic, readonly, copy) NSString *title;
 
-- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate title:(NSString*)title;
-- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate;
+- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate thumbnailUrl:(NSURL*)url title:(NSString*)title;
+- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate thumbnailUrl:(NSURL*)url;
 
 - (double)distanceToLocation:(JENPhotoLocation*)otherLocation;
 - (bool)shouldIncludeCoordinate:(CLLocationCoordinate2D)coord;
-
-- (void)addImageUrl:(NSURL*)imageUrl;
 
 @end

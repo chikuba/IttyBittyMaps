@@ -20,13 +20,13 @@
 
 @implementation JENTour
 
--(id)initWithLocations:(NSMutableArray*)locations {
+-(id)initWithLocations:(NSArray*)locations {
 	
 	self = [super init];
 	
     if (self) {
 		
-        self.locations = locations;
+        self.locations = [[NSMutableArray alloc] initWithArray:locations]; // copy
 		_distance = 0.0;
     }
 	

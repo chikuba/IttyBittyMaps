@@ -11,25 +11,26 @@
 
 @interface JENTourPlanner () {
 	
-	int _popluationSize;
-	NSMutableArray *_locations;
 	NSMutableArray *_tours;
 }
 
 @end
 
-@implementation JENTourPlanner 
+@implementation JENTourPlanner
 
--(id)initWithTourLocations:(NSMutableArray*)locations populationSize:(int)populationSize {
+#define PopulationSize 100
+#define EvolutionCycles 200 
+#define IsolatedMatingPoolPopulation 7
+
+-(id)initWithTourLocations:(NSArray*)locations {
 
 	self = [super init];
 	
     if (self) {
-        _popluationSize = populationSize;
-		_locations = locations;
-		_tours = [[NSMutableArray alloc] initWithCapacity:_popluationSize];
 		
-		for(int i = 0; i < _popluationSize; i++) {
+		_tours = [[NSMutableArray alloc] initWithCapacity:PopulationSize];
+		
+		for(int i = 0; i < PopulationSize; i++) {
 			
 			_tours[i] = [[JENTour alloc] initWithLocations:locations];
 			
@@ -46,13 +47,13 @@
 
 -(void)replanTours {
 	
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < EvolutionCycles; i++) {
 
-		NSMutableArray *newTourPopluation = [[NSMutableArray alloc] initWithCapacity:_popluationSize];
+		NSMutableArray *newTourPopluation = [[NSMutableArray alloc] initWithCapacity:PopulationSize];
 		
 		newTourPopluation[0] = [self getShortestTour];
 		
-		for (int i = 1; i < _popluationSize; i++) {
+		for (int i = 1; i < PopulationSize; i++) {
 			
 			JENTour* parent1 = [self getRandomTour];
 			JENTour* parent2 = [self getRandomTour];
@@ -78,7 +79,7 @@
 	
 	NSMutableArray* tourPool = [[NSMutableArray alloc] initWithCapacity:7];
 	
-	for (int i = 0; i < 7; i++) {
+	for (int i = 0; i < IsolatedMatingPoolPopulation; i++) {
 		tourPool[i] = _tours[arc4random_uniform([_tours count])];
 	}
 	
