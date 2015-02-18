@@ -20,13 +20,15 @@
 
 @implementation JENTour
 
+#define MutationRate 2
+
 -(id)initWithLocations:(NSArray*)locations {
 	
 	self = [super init];
 	
     if (self) {
 		
-        self.locations = [[NSMutableArray alloc] initWithArray:locations]; // copy
+        self.locations = [[NSArray alloc] initWithArray:locations]; // copy
 		_distance = 0.0;
     }
 	
@@ -43,7 +45,7 @@
 	
     if (self) {
 		
-        self.locations = [[NSMutableArray alloc] initWithCapacity:[parent1.locations count]];
+       NSMutableArray *crossoverLocations = [[NSMutableArray alloc] initWithCapacity:[parent1.locations count]];
 		_distance = 0.0;
 
 		int startPos = arc4random_uniform([parent1.locations count]);
@@ -52,30 +54,32 @@
 		// add one or two chunks from the first list to our list
 		for (int i = 0; i < [parent1.locations count]; i++) {
 			
-			self.locations[i] = [NSNull null];
+			crossoverLocations[i] = [NSNull null];
 			
 			if (((startPos < endPos) && (i > startPos) && (i < endPos))
 				|| ((startPos > endPos) && !((i < startPos) && (i > endPos)))) {
 				
-				self.locations[i] = parent1.locations[i];
+				crossoverLocations[i] = parent1.locations[i];
 			}
 		}
 		
 		// then add the locations we dont have until the list is complete
 		for (int i = 0; i < [parent2.locations count]; i++) {
 			
-			if (![self.locations containsObject:parent2.locations[i]]) {
+			if (![crossoverLocations containsObject:parent2.locations[i]]) {
 				
 				for (int j = 0; j < [parent1.locations count]; j++) {
 
-					if ([self.locations[j] isEqual:[NSNull null]]) {
+					if ([crossoverLocations[j] isEqual:[NSNull null]]) {
 						
-						self.locations[j] =  parent2.locations[i];
+						crossoverLocations[j] =  parent2.locations[i];
 						break;
 					}
 				}
 			}
 		}
+		
+		self.locations = crossoverLocations;
 	}
 	
     return self;
@@ -85,25 +89,35 @@
 	
 	NSUInteger count = [self.locations count];
 	
+	NSMutableArray *shuffledLocations = [[NSMutableArray alloc] initWithArray:self.locations];
+	
     for (NSUInteger i = 0; i < count; ++i) {
 		
         NSInteger remainingCount = count - i;
         NSInteger exchangeIndex = i + arc4random_uniform((u_int32_t )remainingCount);
 		
-        [self.locations exchangeObjectAtIndex:i withObjectAtIndex:exchangeIndex];
+        [shuffledLocations exchangeObjectAtIndex:i withObjectAtIndex:exchangeIndex];
     }
+	
+	self.locations = shuffledLocations;
 }
 
 - (void)mutate {
 	
-	for(int i = 0; i < [self.locations count]; i++) {
+	NSUInteger count = [self.locations count];
+	
+	NSMutableArray *mutatedLocations = [[NSMutableArray alloc] initWithArray:self.locations];
+	
+	for(int i = 0; i < count; i++) {
 		
-		if(arc4random_uniform(1000) < 2) { // fix
+		if(arc4random_uniform(1000) < MutationRate) {
 						
-			[self.locations exchangeObjectAtIndex:arc4random_uniform((u_int32_t )[self.locations count])
+			[mutatedLocations exchangeObjectAtIndex:arc4random_uniform((u_int32_t )count)
 								withObjectAtIndex:i];
 		}
 	}
+	
+	self.locations = mutatedLocations;
 }
 
 - (double)getDistance {

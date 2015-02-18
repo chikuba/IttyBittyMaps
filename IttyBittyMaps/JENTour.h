@@ -10,7 +10,7 @@
 
 @interface JENTour : NSObject 
 
-@property (strong, nonatomic) NSMutableArray *locations;
+@property (strong, nonatomic) NSArray *locations;
 
 - (id)initWithLocations:(NSArray*)locations;
 - (id)initAsCrossoverOfTour1:(JENTour*)parent1 andTour2:(JENTour*)parent2;

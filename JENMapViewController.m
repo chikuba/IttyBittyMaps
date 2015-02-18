@@ -14,15 +14,14 @@
 
 @implementation JENMapViewController
 
-#define NumberOfPhotosFromFlickr @"100"
+#define NumberOfPhotosFromFlickr 100
 
 #pragma mark -
 #pragma mark View
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	
+
 }
 
 #pragma mark -
@@ -38,9 +37,9 @@
 			@"has_geo": @"1",
 			@"lat": [NSString stringWithFormat:@"%f", coordinate.latitude],
 			@"lon": [NSString stringWithFormat:@"%f", coordinate.longitude],
-			@"per_page": NumberOfPhotosFromFlickr,
-			@"extras":@"geo,url_t,url_o,url_m"}
-	 maxCacheAge:FKDUMaxAgeOneHour
+			@"per_page": [NSString stringWithFormat:@"%d", NumberOfPhotosFromFlickr],
+			@"extras": @"geo"}
+	 maxCacheAge:FKDUMaxAgeNeverCache
 	 completion:^(NSDictionary *response, NSError *error) {
 							   
 	   if (response) {

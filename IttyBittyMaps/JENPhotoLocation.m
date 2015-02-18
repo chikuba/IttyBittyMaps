@@ -10,7 +10,7 @@
 
 @implementation JENPhotoLocation
 
-#define InclusionRadiusInMeters 100
+#define InclusionRadiusInMeters 200
 
 - (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate thumbnailUrl:(NSURL*)url title:(NSString*)title {
     
