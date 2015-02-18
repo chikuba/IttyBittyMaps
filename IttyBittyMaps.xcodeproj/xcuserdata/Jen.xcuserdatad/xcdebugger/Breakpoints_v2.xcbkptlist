@@ -225,5 +225,51 @@
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JENMapViewController.m"
+            timestampString = "445995881.358896"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "-fetchAndDrawPhotoTourForLocationAsync:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__62-[JENMapViewController fetchAndDrawPhotoTourForLocationAsync:]_block_invoke"
+                  moduleName = "IttyBittyMaps"
+                  urlString = "file:///Users/Jen/Documents/Code/Work/IttyBittyMaps/JENMapViewController.m"
+                  timestampString = "445996331.563193"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "47"
+                  endingLineNumber = "47"
+                  offsetFromSymbolStart = "116">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__62-[JENMapViewController fetchAndDrawPhotoTourForLocationAsync:]_block_invoke_2"
+                  moduleName = "IttyBittyMaps"
+                  urlString = "file:///Users/Jen/Documents/Code/Work/IttyBittyMaps/JENMapViewController.m"
+                  timestampString = "445996331.563603"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "47"
+                  endingLineNumber = "47"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
