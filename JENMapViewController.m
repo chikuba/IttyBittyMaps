@@ -195,9 +195,8 @@
 	if([view.annotation isKindOfClass:[JENPhotoLocation class]]) {
 		
 		__weak MKAnnotationView *weakView = view;
-		
-		dispatch_queue_t downloadQueue = dispatch_queue_create("thumbnail_downloader", NULL);
-															   dispatch_async(downloadQueue, ^{
+				
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 																   
 			NSData *data = [NSData dataWithContentsOfURL:((JENPhotoLocation*)weakView.annotation).thumbnailUrl];
 			UIImage *image = [UIImage imageWithData:data];
