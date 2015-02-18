@@ -7,61 +7,65 @@
 //
 
 #import "JENMapViewController.h"
-#import <FlickrKit.h>
-#import "JENLocation.h"
+#import "JENPhotoLocation.h"
 #import "JENTour.h"
 #import "JENTourPlanner.h"
+#import <FlickrKit.h>
 
 @implementation JENMapViewController
+
+#define NumberOfPhotosFromFlickr @"100"
 
 #pragma mark -
 #pragma mark View
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	[[FlickrKit sharedFlickrKit] call:@"flickr.photos.search"
-								 args:@{@"accuracy": @"11",
-										@"has_geo": @"1",
-										@"lat": @"-37.796014",
-										@"lon": @"144.944347",
-										@"per_page": @"100",
-										@"extras":@"geo,url_t,url_o,url_m"}
-						  maxCacheAge:FKDUMaxAgeOneHour
-						   completion:^(NSDictionary *response, NSError *error) {
-							   			 
-		   if (response) {
-			   		
-			   dispatch_async(dispatch_get_global_queue(0,0), ^ {
-				   
-				   NSMutableArray* locations = [self parseLocations:[[response objectForKey:@"photos"] objectForKey:@"photo"]];
-				   
-				   dispatch_async(dispatch_get_main_queue(), ^{
-					   [self addLocationsToMap:locations];
-				   });
-				   
-				   JENTour* tour = [self planTour:locations];
-				   
-				   dispatch_async(dispatch_get_main_queue(), ^{
-					   [self drawTour:tour];
-				   });
-			   });
-			   			   
-		   } else {
-			   // show the error
-		   }
-	}];
 }
 
--(void)viewDidAppear:(BOOL)animated {
+#pragma mark -
+#pragma mark Tour planning
+
+- (void)fetchAndDrawPhotoTourForLocationAsync:(CLLocationCoordinate2D)coordinate {
 	
-	CLLocationCoordinate2D zoomLocation;
-    zoomLocation.latitude = -37.796014;
-    zoomLocation.longitude= 144.944347;
-	
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 10000, 10000);
-	
-    [self.mapView setRegion:viewRegion animated:YES];
+	[[FlickrKit sharedFlickrKit]
+	 call:@"flickr.photos.search"
+					
+	 args:@{@"accuracy": @"11",
+			@"has_geo": @"1",
+			@"lat": [NSString stringWithFormat:@"%f", coordinate.latitude],
+			@"lon": [NSString stringWithFormat:@"%f", coordinate.longitude],
+			@"per_page": NumberOfPhotosFromFlickr,
+			@"extras":@"geo,url_t,url_o,url_m"}
+	 maxCacheAge:FKDUMaxAgeOneHour
+	 completion:^(NSDictionary *response, NSError *error) {
+							   
+	   if (response) {
+		   
+		   dispatch_async(dispatch_get_global_queue(0,0), ^ {
+			   
+			   NSMutableArray* photoLocations = [self parseLocations:[[response objectForKey:@"photos"] objectForKey:@"photo"]];
+			   
+			   dispatch_async(dispatch_get_main_queue(), ^{
+				   [self addLocationsToMap:[[NSArray alloc] initWithArray:photoLocations]];
+			   });
+			   
+			   JENTour* tour = [self planTour:photoLocations];
+			   
+			   dispatch_async(dispatch_get_main_queue(), ^{
+				   [self drawTourOnMap:tour];
+			   });
+		   });
+		   
+	   } else {
+		   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unable to fetch photos"
+														   message:error.localizedDescription
+														  delegate:self
+												 cancelButtonTitle:@"OK"
+												 otherButtonTitles:nil];
+		   [alert show];
+	   }
+   }];
 }
 
 -(NSMutableArray*)parseLocations:(NSDictionary*)photos {
@@ -77,7 +81,7 @@
 
 		bool groupedWithOtherLocation = false;
 
-		for (JENLocation* location in locations) {
+		for (JENPhotoLocation* location in locations) {
 
 			if([location shouldIncludeCoordinate:coordinate]) {
 
@@ -90,13 +94,13 @@
 
 		if(groupedWithOtherLocation) continue;
 		
-		JENLocation *location;
+		JENPhotoLocation *location;
 		
 		if([locations count] == 0) {
 			
-			location = [[JENLocation alloc] initWithCoordinate:coordinate]; // the hotell
+			location = [[JENPhotoLocation alloc] initWithCoordinate:coordinate]; // the hotell
 			
-		} else location = [[JENLocation alloc] initWithCoordinate:coordinate
+		} else location = [[JENPhotoLocation alloc] initWithCoordinate:coordinate
 															 title:[photo objectForKey:@"title"]];
 
 		[location addImageUrl:[[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeSmallSquare75
@@ -109,24 +113,24 @@
 
 }
 
--(void)addLocationsToMap:(NSMutableArray*)locations {
+-(void)addLocationsToMap:(NSArray*)photoLocations {
 	
-	for (JENLocation* location in locations) {
+	for (JENPhotoLocation* photoLocation in photoLocations) {
 		
-		[self.mapView addAnnotation:location];
+		[self.mapView addAnnotation:photoLocation];
 	}
 }
 
--(JENTour*)planTour:(NSMutableArray*)locations {
+-(JENTour*)planTour:(NSMutableArray*)photoLocations {
 	
-	JENTourPlanner* tourplanner = [[JENTourPlanner alloc] initWithTourLocations:locations
+	JENTourPlanner* tourplanner = [[JENTourPlanner alloc] initWithTourLocations:photoLocations
 																 populationSize:200];
 	[tourplanner replanTours];
 	
 	return [tourplanner getShortestTour];
 }
 
--(void)drawTour:(JENTour*)tour {
+-(void)drawTourOnMap:(JENTour*)tour {
 	
     CLLocationCoordinate2D *pointsCoordinate = (CLLocationCoordinate2D *)
 	malloc(sizeof(CLLocationCoordinate2D) * [tour.locations count] + 1);
@@ -141,7 +145,7 @@
 														 count:[tour.locations count] + 1];
     free(pointsCoordinate);
 	
-    [self.mapView addOverlay:polyline];
+	[self.mapView addOverlay:polyline];
 }
 
 #pragma mark -
@@ -171,23 +175,22 @@
         pinView.animatesDrop = true;
         pinView.canShowCallout = true;
 		pinView.draggable = false;
-        pinView.calloutOffset = CGPointMake(-5, 5);
-		
-		if([annotation isKindOfClass:[JENLocation class]]) {
-			
-			pinView.pinColor = ((JENLocation*)annotation).isHotel ? MKPinAnnotationColorPurple : MKPinAnnotationColorRed;
-		}
-
     }
+	
+	if([annotation isKindOfClass:[JENPhotoLocation class]]) {
+		
+		pinView.pinColor = ((JENPhotoLocation*)annotation).isHotel ?
+		MKPinAnnotationColorPurple : MKPinAnnotationColorRed;
+	}
 	
     return pinView;
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
 	
-	if([view.annotation isKindOfClass:[JENLocation class]]) {
+	if([view.annotation isKindOfClass:[JENPhotoLocation class]]) {
 	
-		UIImage *image = [UIImage imageWithData: [NSData dataWithContentsOfURL:((JENLocation*)view.annotation).imageUrls[0]]];
+		UIImage *image = [UIImage imageWithData: [NSData dataWithContentsOfURL:((JENPhotoLocation*)view.annotation).imageUrls[0]]];
 		
 		UIImageView *imgView = [[UIImageView alloc] initWithImage:image];
 		view.leftCalloutAccessoryView = imgView;
@@ -198,14 +201,25 @@
 	
 	for (MKAnnotationView *view in views) {
 
-		if([view.annotation isKindOfClass:[JENLocation class]]) {
+		if([view.annotation isKindOfClass:[JENPhotoLocation class]]) {
 			
-			if(((JENLocation*)view.annotation).isHotel) {
-				[mapView selectAnnotation:view.annotation animated:YES];
-
+			if(((JENPhotoLocation*)view.annotation).isHotel) {
+				
+				[mapView selectAnnotation:view.annotation
+								 animated:true];
 			}
 		}
 	}
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
+	
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 10000, 10000);
+	
+    [self.mapView setRegion:viewRegion
+				   animated:true];
+	
+	[self fetchAndDrawPhotoTourForLocationAsync:userLocation.coordinate];
 }
 
 @end

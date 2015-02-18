@@ -7,7 +7,7 @@
 //
 
 #import "JENTour.h"
-#import "JENLocation.h"
+#import "JENPhotoLocation.h"
 
 #include <stdlib.h>
 
@@ -36,7 +36,7 @@
 -(id)initAsCrossoverOfTour1:(JENTour*)parent1 andTour2:(JENTour*)parent2 {
 	
 	NSAssert(([parent1.locations count] == [parent2.locations count]),
-			 @"To be able to mate two lists, they need to be of equal size, ",
+			 @"To be able to 'mate' two lists, they need to be of equal size, ",
 			 @"otherwise me might end up with empty slots or duplicates. ");
 	
 	self = [super init];
@@ -110,18 +110,18 @@
 	
 	if(_distance > 0.0) return _distance;
 	
-	JENLocation* previousLocation = nil;
+	JENPhotoLocation* previousLocation = nil;
 	_distance = 0.0;
 	
-	for (JENLocation* location in self.locations) {
+	for (JENPhotoLocation* location in self.locations) {
 		
 		_distance += [previousLocation distanceToLocation:location];
 		
 		previousLocation = location;
 	}
 	
-	JENLocation* start = [self.locations firstObject];
-	JENLocation* finish = [self.locations lastObject];
+	JENPhotoLocation* start = [self.locations firstObject];
+	JENPhotoLocation* finish = [self.locations lastObject];
 	
 	_distance += [start distanceToLocation:finish];
 	
