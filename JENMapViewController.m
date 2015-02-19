@@ -148,7 +148,8 @@
 
 -(void)drawTourOnMap:(JENTour*)tour {
 	
-	NSAssert(([tour.locations count] > 2), @"You need 3 or more locations to get a full tour");
+	NSAssert(([tour.locations count] > 1),
+			 @"You need 2 or more locations to get a full tour");
 	
     CLLocationCoordinate2D *pointsCoordinate
 	= (CLLocationCoordinate2D *)malloc(sizeof(CLLocationCoordinate2D) * [tour.locations count] + 1);
@@ -198,7 +199,7 @@
 	if([annotation isKindOfClass:[JENPhotoLocation class]]) {
 		
 		pinView.pinColor = ((JENPhotoLocation*)annotation).isHotel ?
-		MKPinAnnotationColorPurple : MKPinAnnotationColorRed;
+		MKPinAnnotationColorRed : MKPinAnnotationColorPurple;
 	}
 	
     return pinView;

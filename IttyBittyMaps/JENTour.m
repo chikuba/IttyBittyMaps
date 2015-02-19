@@ -36,7 +36,7 @@
 }
 
 -(id)initAsCrossoverOfTour1:(JENTour*)parent1 andTour2:(JENTour*)parent2 {
-	
+		
 	NSAssert(([parent1.locations count] == [parent2.locations count]),
 			 @"To be able to 'mate' two lists, they need to be of equal size, ",
 			 @"otherwise me might end up with empty slots or duplicates. ");
@@ -125,6 +125,9 @@
 - (double)distance {
 	
 	if(_distance > 0.0) return _distance;
+	
+	NSAssert([self.locations count] > 1,
+			 @"We need at least 2 locations to be able to calculate the distance correctly. ");
 	
 	JENPhotoLocation* previousLocation = nil;
 	_distance = 0.0;

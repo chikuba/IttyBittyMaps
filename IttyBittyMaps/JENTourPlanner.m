@@ -22,7 +22,7 @@
 #define EvolutionCycles 100
 #define IsolatedMatingPoolPopulation 5
 
--(id)initWithTourLocations:(NSArray*)locations {
+- (id)initWithTourLocations:(NSArray*)locations {
 
 	self = [super init];
 	
@@ -42,14 +42,14 @@
     return self;
 }
 
--(JENTour*)shortestTour {
+- (JENTour*)shortestTour {
 	
 	return [self getShortestOfTours:_tours];
 }
 
--(void)replanTours {
+- (void)replanTours {
 	
-	NSAssert(PopulationSize > 0, @"The poplulationsize must be atleast 1 or more. ");
+	NSAssert(PopulationSize > 0, @"The PoplulationSize must be atleast 1 or more. ");
 	
 	double tourDistanceBefore = [[self shortestTour] distance];
 	
@@ -83,13 +83,13 @@
 	double tourDistanceAfter = [[self shortestTour] distance];
 	
 	NSLog(@"Shortest tour after replan: %f", tourDistanceAfter);
-	NSLog(@"Tour is %f.2 procent shorter. ", (tourDistanceAfter/tourDistanceBefore) * 100);
+	NSLog(@"Replaned tour is %.1f%% shorter. ", (tourDistanceAfter / tourDistanceBefore) * 100);
 }
 
 #pragma mark -
 #pragma mark Helpers
 
--(JENTour*)getRandomTour {
+- (JENTour*)getRandomTour {
 	
 	NSMutableArray* tourPool = [[NSMutableArray alloc] initWithCapacity:7];
 	
@@ -100,7 +100,9 @@
 	return [self getShortestOfTours:tourPool];
 }
 
--(JENTour*)getShortestOfTours:(NSArray*)tours {
+- (JENTour*)getShortestOfTours:(NSArray*)tours {
+	
+	NSAssert([tours count] > 0, @"The tour needs to contain atleast 1 location. ");
 	
 	JENTour* shortestTour = [tours firstObject];
 	
