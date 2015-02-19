@@ -44,7 +44,7 @@
 
 - (JENTour*)shortestTour {
 	
-	return [self getShortestOfTours:_tours];
+	return [self shortestOfTours:_tours];
 }
 
 - (void)replanTours {
@@ -63,8 +63,8 @@
 		
 		for (int i = 1; i < PopulationSize; i++) {
 			
-			JENTour* parent1 = [self getRandomTour];
-			JENTour* parent2 = [self getRandomTour];
+			JENTour* parent1 = [self randomShortTour];
+			JENTour* parent2 = [self randomShortTour];
 			
 			JENTour* child = [[JENTour alloc] initAsCrossoverOfTour1:parent1
 															andTour2:parent2];
@@ -89,18 +89,18 @@
 #pragma mark -
 #pragma mark Helpers
 
-- (JENTour*)getRandomTour {
+- (JENTour*)randomShortTour {
 	
-	NSMutableArray* tourPool = [[NSMutableArray alloc] initWithCapacity:7];
+	NSMutableArray* tourPool = [[NSMutableArray alloc] initWithCapacity:IsolatedMatingPoolPopulation];
 	
 	for (int i = 0; i < IsolatedMatingPoolPopulation; i++) {
 		tourPool[i] = _tours[arc4random_uniform([_tours count])];
 	}
 	
-	return [self getShortestOfTours:tourPool];
+	return [self shortestOfTours:tourPool];
 }
 
-- (JENTour*)getShortestOfTours:(NSArray*)tours {
+- (JENTour*)shortestOfTours:(NSArray*)tours {
 	
 	NSAssert([tours count] > 0, @"The tour needs to contain atleast 1 location. ");
 	
