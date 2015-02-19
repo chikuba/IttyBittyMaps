@@ -8,6 +8,11 @@ The locations are the added to the map, whilst a "Tour planner" is calculating t
 #Usage
 Everything should be included in the repo. You should be able to build it as is. 
 
+Just make sure to select IttyBittyMaps when bulding. Also, you can simulate your location like this: 
+
+![How to](howto.png "Howto")
+
+
 #Disclaimer
 The Genetic algoritm is trying to find the shortest route, which might not always look the best. I have been able to cut the distance in half or more. I also need to consider the resticted hardware on the iPhone. 
 
