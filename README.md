@@ -29,3 +29,5 @@ I am currently using FlickrKit to fetch the images which is a bit over the top. 
 ![An example](screenshot2.png "Example")
 ![An example](screenshot3.png "Example")
 
+#What's next?
+I would like to make it possible for the user to click on a location and have the possibility to display all the batched images in a new view. 
