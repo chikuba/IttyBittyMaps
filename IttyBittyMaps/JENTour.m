@@ -26,27 +26,27 @@
 	
 	self = [super init];
 	
-    if (self) {
+	if (self) {
 		
-        self.locations = [[NSArray alloc] initWithArray:locations]; // copy
+		self.locations = [[NSArray alloc] initWithArray:locations]; // copy
 		_distance = 0.0;
-    }
+	}
 	
-    return self;
+	return self;
 }
 
 -(id)initAsCrossoverOfTour1:(JENTour*)parent1 andTour2:(JENTour*)parent2 {
-		
+	
 	NSAssert(([parent1.locations count] == [parent2.locations count]),
 			 @"To be able to 'mate' two lists, they need to be of equal size, ",
 			 @"otherwise me might end up with empty slots or duplicates. ");
 	
 	self = [super init];
 	
-    if (self) {
+	if (self) {
 		
-       NSMutableArray *crossoverLocations = [[NSMutableArray alloc] initWithCapacity:[parent1.locations count]];
-
+		NSMutableArray *crossoverLocations = [[NSMutableArray alloc] initWithCapacity:[parent1.locations count]];
+		
 		int startPos = arc4random_uniform([parent1.locations count]);
 		int endPos = arc4random_uniform([parent1.locations count]);
 		
@@ -68,7 +68,7 @@
 			if (![crossoverLocations containsObject:parent2.locations[i]]) {
 				
 				for (int j = 0; j < [parent1.locations count]; j++) {
-
+					
 					if ([crossoverLocations[j] isEqual:[NSNull null]]) {
 						
 						crossoverLocations[j] =  parent2.locations[i];
@@ -82,7 +82,7 @@
 		_distance = 0.0;
 	}
 	
-    return self;
+	return self;
 }
 
 - (void)shuffle {
@@ -91,13 +91,13 @@
 	
 	NSMutableArray *shuffledLocations = [[NSMutableArray alloc] initWithArray:self.locations];
 	
-    for (NSUInteger i = 0; i < count; ++i) {
+	for (NSUInteger i = 0; i < count; ++i) {
 		
-        NSInteger remainingCount = count - i;
-        NSInteger exchangeIndex = i + arc4random_uniform((u_int32_t)remainingCount);
+		NSInteger remainingCount = count - i;
+		NSInteger exchangeIndex = i + arc4random_uniform((u_int32_t)remainingCount);
 		
-        [shuffledLocations exchangeObjectAtIndex:i withObjectAtIndex:exchangeIndex];
-    }
+		[shuffledLocations exchangeObjectAtIndex:i withObjectAtIndex:exchangeIndex];
+	}
 	
 	self.locations = shuffledLocations;
 	_distance = 0.0;
@@ -112,12 +112,12 @@
 	for(int i = 0; i < count; i++) {
 		
 		if(arc4random_uniform(100) < MutationRate) {
-						
+			
 			[mutatedLocations exchangeObjectAtIndex:arc4random_uniform((u_int32_t)count)
-								withObjectAtIndex:i];
+								  withObjectAtIndex:i];
 		}
 	}
-		
+	
 	self.locations = mutatedLocations;
 	_distance = 0.0;
 }

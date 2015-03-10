@@ -13,16 +13,16 @@
 #define InclusionRadiusInMeters 200
 
 - (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate thumbnailUrl:(NSURL*)url title:(NSString*)title {
-    
+	
 	self = [super init];
 	
-    if (self) {
+	if (self) {
 		
 		_thumbnailUrl = url;
 		_isHotel = false;
-        _coordinate = coordinate;
+		_coordinate = coordinate;
 		_title = title;
-    }
+	}
 	
     return self;
 }
@@ -31,15 +31,15 @@
 	
 	self = [super init];
 	
-    if (self) {
+	if (self) {
 		
 		_thumbnailUrl = url;
 		_isHotel = true;
-        _coordinate = coordinate;
+		_coordinate = coordinate;
 		_title = @"The Hotel";
-    }
+	}
 	
-    return self;
+	return self;
 }
 
 - (double)distanceToLocation:(JENPhotoLocation*)otherLocation {
@@ -60,7 +60,7 @@
 - (double)distanceFrom:(CLLocationCoordinate2D)fromCoordinate to:(CLLocationCoordinate2D)toCoordinate {
 	
 	CLLocation *start = [[CLLocation alloc] initWithLatitude:fromCoordinate.latitude
-												   longitude:fromCoordinate.longitude];
+												longitude:fromCoordinate.longitude];
 	
 	CLLocation *finish = [[CLLocation alloc] initWithLatitude:toCoordinate.latitude
 													longitude:toCoordinate.longitude];

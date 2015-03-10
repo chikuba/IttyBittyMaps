@@ -23,10 +23,10 @@
 #define IsolatedMatingPoolPopulation 5
 
 - (id)initWithTourLocations:(NSArray*)locations {
-
+	
 	self = [super init];
 	
-    if (self) {
+	if (self) {
 		
 		NSMutableArray *tourPopulation = [[NSMutableArray alloc] initWithCapacity:PopulationSize];
 		
@@ -38,8 +38,9 @@
 		}
 		
 		_tours = tourPopulation;
-    }
-    return self;
+	}
+	
+	return self;
 }
 
 - (JENTour*)shortestTour {
@@ -54,9 +55,9 @@
 	double tourDistanceBefore = [[self shortestTour] distance];
 	
 	NSLog(@"Shortest tour before replan: %f", tourDistanceBefore);
-		
+	
 	for (int i = 0; i < EvolutionCycles; i++) {
-
+		
 		NSMutableArray *newTourPopluation = [[NSMutableArray alloc] initWithCapacity:PopulationSize];
 		
 		newTourPopluation[0] = [self shortestTour];

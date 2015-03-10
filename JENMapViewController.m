@@ -20,8 +20,8 @@
 #pragma mark View
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-
+	[super viewDidLoad];
+	
 }
 
 #pragma mark -
@@ -41,72 +41,72 @@
 			@"extras": @"geo"}
 	 maxCacheAge:FKDUMaxAgeOneHour
 	 completion:^(NSDictionary *response, NSError *error) {
-							   
-	   if (response) {
-		   
-		   dispatch_async(dispatch_get_global_queue(0,0), ^ {
-			   
-			   NSArray* photoLocations = [weakSelf parseLocations:[[response objectForKey:@"photos"]
-																   objectForKey:@"photo"]];
-			   
-			   if([photoLocations count] < 3) {
-				   
-				   dispatch_async(dispatch_get_main_queue(), ^{
-					   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not enough photos"
-																	   message:@"Need 3 or more photo locations to make a route"
-																	  delegate:weakSelf
-															 cancelButtonTitle:@"OK"
-															 otherButtonTitles:nil];
-					   [alert show];
-					});
-				   
-				   return;
-			   }
-			   
-			   dispatch_async(dispatch_get_main_queue(), ^{
-				   
-				   [weakSelf.mapView addAnnotations:photoLocations];
-			   });
-			   
-			   JENTour* tour = [weakSelf planTour:photoLocations];
-			   
-			   dispatch_async(dispatch_get_main_queue(), ^{
-				   [weakSelf drawTourOnMap:tour];
-			   });
-		   });
-		   
-	   } else {
-		   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unable to fetch photos"
-														   message:error.localizedDescription
-														  delegate:weakSelf
-												 cancelButtonTitle:@"OK"
-												 otherButtonTitles:nil];
-		   [alert show];
-	   }
-   }];
+		 
+		 if (response) {
+			 
+			 dispatch_async(dispatch_get_global_queue(0,0), ^ {
+				 
+				 NSArray* photoLocations = [weakSelf parseLocations:[[response objectForKey:@"photos"]
+																	 objectForKey:@"photo"]];
+				 
+				 if([photoLocations count] < 3) {
+					 
+					 dispatch_async(dispatch_get_main_queue(), ^{
+						 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not enough photos"
+																		 message:@"Need 3 or more photo locations to make a route"
+																		delegate:weakSelf
+															   cancelButtonTitle:@"OK"
+															   otherButtonTitles:nil];
+						 [alert show];
+					 });
+					 
+					 return;
+				 }
+				 
+				 dispatch_async(dispatch_get_main_queue(), ^{
+					 
+					 [weakSelf.mapView addAnnotations:photoLocations];
+				 });
+				 
+				 JENTour* tour = [weakSelf planTour:photoLocations];
+				 
+				 dispatch_async(dispatch_get_main_queue(), ^{
+					 [weakSelf drawTourOnMap:tour];
+				 });
+			 });
+			 
+		 } else {
+			 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unable to fetch photos"
+															 message:error.localizedDescription
+															delegate:weakSelf
+												   cancelButtonTitle:@"OK"
+												   otherButtonTitles:nil];
+			 [alert show];
+		 }
+	 }];
 }
 
 -(NSArray*)parseLocations:(NSDictionary*)photos {
 	
 	NSMutableArray *locations = [[NSMutableArray alloc] initWithCapacity:[photos count]];
-
+	
 	for (NSDictionary *photo in photos) {
-
+		
 		CLLocationCoordinate2D coordinate;
 		coordinate.latitude = [[photo objectForKey:@"latitude"] doubleValue];
 		coordinate.longitude = [[photo objectForKey:@"longitude"] doubleValue];
 		
 		bool groupedWithOtherLocation = false;
-
+		
 		for (JENPhotoLocation* location in locations) {
-
+			
 			if([location shouldIncludeCoordinate:coordinate]) {
 				
 				groupedWithOtherLocation = true;
 				break;
 			}
 		}
-
+		
 		if(groupedWithOtherLocation) continue;
 		
 		NSURL *thumbnailUrl = [[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeSmallSquare75
@@ -132,9 +132,9 @@
 			[locations addObject:photoLocation];
 		}
 	}
-
+	
 	return locations;
-
+	
 }
 
 -(JENTour*)planTour:(NSArray*)photoLocations {
@@ -151,18 +151,18 @@
 	NSAssert(([tour.locations count] > 1),
 			 @"You need 2 or more locations to get a full tour");
 	
-    CLLocationCoordinate2D *pointsCoordinate
+	CLLocationCoordinate2D *pointsCoordinate
 	= (CLLocationCoordinate2D *)malloc(sizeof(CLLocationCoordinate2D) * [tour.locations count] + 1);
 	
 	for (int i = 0; i < [tour.locations count]; ++i) {
 		pointsCoordinate[i] = [tour.locations[i] coordinate];
 	}
-
+	
 	pointsCoordinate[[tour.locations count]] = [[tour.locations firstObject] coordinate];
 	
-    MKPolyline *polyline = [MKPolyline polylineWithCoordinates:pointsCoordinate
+	MKPolyline *polyline = [MKPolyline polylineWithCoordinates:pointsCoordinate
 														 count:[tour.locations count] + 1];
-    free(pointsCoordinate);
+	free(pointsCoordinate);
 	
 	[self.mapView addOverlay:polyline];
 }
@@ -173,28 +173,28 @@
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay {
 	
 	MKPolylineView *polylineView = [[MKPolylineView alloc] initWithPolyline:overlay];
-    polylineView.strokeColor = [UIColor blackColor];
-    polylineView.lineWidth = 2;
+	polylineView.strokeColor = [UIColor blackColor];
+	polylineView.lineWidth = 2;
 	
-    return polylineView;
+	return polylineView;
 }
 
 - (MKAnnotationView*)mapView:(MKMapView*)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
 	
-    static NSString *annotaionIdentifier = @"annotationIdentifier";
+	static NSString *annotaionIdentifier = @"annotationIdentifier";
 	
-    MKPinAnnotationView *pinView = (MKPinAnnotationView*)
+	MKPinAnnotationView *pinView = (MKPinAnnotationView*)
 	[mapView dequeueReusableAnnotationViewWithIdentifier:annotaionIdentifier];
 	
-    if(pinView == nil) {
+	if(pinView == nil) {
 		
-        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
+		pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
 												  reuseIdentifier:annotaionIdentifier];
-        
-        pinView.animatesDrop = true;
-        pinView.canShowCallout = true;
+		
+		pinView.animatesDrop = true;
+		pinView.canShowCallout = true;
 		pinView.draggable = false;
-    }
+	}
 	
 	if([annotation isKindOfClass:[JENPhotoLocation class]]) {
 		
@@ -202,7 +202,7 @@
 		MKPinAnnotationColorRed : MKPinAnnotationColorPurple;
 	}
 	
-    return pinView;
+	return pinView;
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
@@ -210,12 +210,12 @@
 	if([view.annotation isKindOfClass:[JENPhotoLocation class]]) {
 		
 		__weak MKAnnotationView *weakView = view;
-				
+		
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-																   
+			
 			NSData *data = [NSData dataWithContentsOfURL:((JENPhotoLocation*)weakView.annotation).thumbnailUrl];
 			UIImage *image = [UIImage imageWithData:data];
-																   
+			
 			dispatch_async(dispatch_get_main_queue(), ^ {
 				
 				UIImageView *imgView = [[UIImageView alloc] initWithImage:image];
@@ -228,7 +228,7 @@
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
 	
 	for (MKAnnotationView *view in views) {
-
+		
 		if([view.annotation isKindOfClass:[JENPhotoLocation class]]) {
 			
 			if(((JENPhotoLocation*)view.annotation).isHotel) {
@@ -242,9 +242,9 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
 	
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 10000, 10000);
+	MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 10000, 10000);
 	
-    [self.mapView setRegion:viewRegion
+	[self.mapView setRegion:viewRegion
 				   animated:true];
 	
 	[self fetchAndDrawPhotoTourForLocationAsync:userLocation.coordinate];

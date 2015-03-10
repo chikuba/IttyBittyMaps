@@ -13,9 +13,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-   
+	
 	[[FlickrKit sharedFlickrKit] initializeWithAPIKey:@"cdc874a5628a18d2012264a07b049e90"
-										 sharedSecret:@"789217d2a8eded5c"];	
+										 sharedSecret:@"789217d2a8eded5c"];
 	
     return YES;
 }
@@ -28,7 +28,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-	// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+	// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
 	// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
